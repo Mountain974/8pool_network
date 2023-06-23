@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -27,8 +27,13 @@ Route::resource('/users', App\Http\Controllers\UserController::class)->except('i
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
-Route::resource('/posts', App\Http\Controllers\PostController::class)->except('index');
+Route::post('/posts/create', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
 
-Route::post('/posts\create', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+Route::resource('/posts', App\Http\Controllers\PostController::class)->except('create');
+
+Route::resource('/comments', App\Http\Controllers\CommentController::class)->except('index', 'create');
+
+Route::get('/search', [App\Http\Controllers\PostController::class, 'search'])->name('search');
+
 
 

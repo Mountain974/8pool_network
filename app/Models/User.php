@@ -24,6 +24,15 @@ class User extends Authenticatable
         'image',
     ];
 
+    public function isAdmin() {
+        if($this->role_id == '2'){
+            return true;
+        }
+        else {
+            return false;
+        };
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -61,10 +70,6 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function isAdmin(){
-    // return $this->role== "admin";
-        return $this->role_id==2;
-    }
 }
 
 

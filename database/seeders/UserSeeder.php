@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         // Création d'un utilisateur de test
         User::create([
             'pseudo' => 'utilisateur',
-            'password' => Hash::make('Azerty88@'),
+            'password' => Hash::make('Azerty@123'),
             'email' => 'utilisateur@test.fr',
             'email_verified_at' => now(),
             'role_id' => 1
