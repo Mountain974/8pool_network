@@ -39,8 +39,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $this->authorize('update',$post);
-        $post = Post::findOrFail($post ->id);
+        $this->authorize('update',$post);  // double sécurité pr vérifier que seul un admin ou l'auteur du post accède à cette page
+        //$post = Post::findOrFail($post ->id);
         return view('posts/edit', [
             'post' => $post     // 'post' est le nom qu'aura $post ds la view que l'on va afficher
            ]);
@@ -51,6 +51,8 @@ class PostController extends Controller
      */
     public function update(Request $request,Post $post)   // on utilise le request que avec la méthode post !
     {
+        $this->authorize('update',$post);  // double sécurité pr vérifier que seul un admin ou l'auteur du post accède à cette page
+
         $request->validate([                                // on check que les saisies de l'utilisateur sont au bon format, sinon msg d'erreur automatique
             'content'=> ['required', 'string', 'max:500'],
             'tags'=> ['required', 'string', 'max:40'],
@@ -68,6 +70,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete',$post);  // double sécurité pr vérifier que seul un admin ou l'auteur du post accède à cette page
+
         $post->delete();
 
         return redirect()->route('home')->with('message', 'Le message a bien été supprimé');
