@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+8 Pool Network Inscription
+@endsection
 
 @section('content')
 <div class="container">
@@ -8,7 +11,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -28,7 +31,7 @@
                             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('image') }}</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" required autocomplete="pseudo" autofocus>
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" required autocomplete="pseudo" autofocus>
 
                                 @error('image')
                                 <span class="invalid-feedback" role="alert">

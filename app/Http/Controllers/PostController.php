@@ -16,12 +16,14 @@ class PostController extends Controller
         $request->validate([                                // on check que les saisies de l'utilisateur sont au bon format, sinon msg d'erreur automatique
             'content'=> ['required', 'string', 'max:500'],
             'tags'=> ['required', 'string', 'max:40'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         Post::create([
             'user_id'=> Auth::user()->id,       // la class Auth permet d'accéder au user connecté
             'content'=> $request -> content,
             'tags'=> $request -> tags,
+            'image' => isset($request['image']) ? uploadImage($request['image']) : null,
         ]);
         return redirect()->route('home')->with('message', 'Le message a bien été ajouté');
     }
@@ -56,12 +58,14 @@ class PostController extends Controller
         $request->validate([                                // on check que les saisies de l'utilisateur sont au bon format, sinon msg d'erreur automatique
             'content'=> ['required', 'string', 'max:500'],
             'tags'=> ['required', 'string', 'max:40'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
          $post->update([
              'content'=> $request -> content,
              'tags'=> $request -> tags,
-         ]);
+             'image' => isset($request['image']) ? uploadImage($request['image']) : null,
+            ]);
         return redirect()->route('home')->with('message', 'Le message a bien été modifié'); // on redirige bien vers la route home pour que s'affiche bien tous les posts sur home.blade
     }
 

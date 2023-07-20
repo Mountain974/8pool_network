@@ -24,7 +24,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        if($user->id == $comment->user_id || $user->role_id == 2 ){
+        if($user->id == $comment->user_id ){
             return true;
         }
         else{

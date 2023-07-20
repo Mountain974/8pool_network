@@ -15,17 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::resource('/users', App\Http\Controllers\UserController::class)->except('index', 'create', 'store');
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 Route::post('/posts/create', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
 

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -16,12 +16,11 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css']) {{-- permet de compiler les fichiers qui sont spécifiés --}}
 </head>
-<body  style="background-image : url(images/15.jpg);background-repeat:no-repeat; background-attachment:fixed ; background-size:cover; height:100vh ; background-position: center">
+<body style="background-image : url({{asset('images/15.jpg')}});background-repeat:no-repeat; background-attachment:fixed ; background-size:cover; height:100vh ; background-position: center">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm">
-            
+            <div class="img-fluid ms-4"><a href="{{url('/')}}"><img src="{{asset('images\logo8Pool.png')}}" style="height:50px" ></a></div>
             <div class="container">
-                <div>8 Pool Network</div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -46,15 +45,17 @@
                                 </li>
                             @endif
                         @else
-                        {{-- BOUTON DE RECHERHCE --}}
+                        {{-- BARRE DE RECHERHCE --}}
                         <form id="search-form" action="{{ route('search') }}" method="GET">
                             @csrf
-                            <input type="text" class="form-control" id="recherchez" name="search">
-                            <button class="text-white bg-grid" type="submit">Rechercher</button>
+                            <div class="row">
+                                <div class="col"><input type="text" class="form-control fs-5 text-white" id="recherchez" name="search" style=" background:rgba(20, 156, 27, 0.5)"></div>
+                                <div class="col"><button class="text-white bg-grid fs-4" type="submit" style="background-color: green">Rechercher</button></div>
+                            </div>
                         </form>    
                         
                         <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a style="background-image : url(images/queue2.jpg); background-size:cover ; background-position:center" id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->pseudo }}
                                 </a>
 
@@ -78,7 +79,7 @@
         </nav>
 
         <main class="py-4">
-            <img src="c:\wamp64\www\8pool_network\public\images\fondNoir.jpg" style="100px;100vh" class="img-fluid">
+            {{-- <img src="c:\wamp64\www\8pool_network\public\images\Noir.jpg" style="100px;100vh" class="img-fluid"> --}}
            @yield('content')  {{--  c'est pour injecter le code des views (correspond au @section('content')) --}}
         </main>
     </div>

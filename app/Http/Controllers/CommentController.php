@@ -32,6 +32,7 @@ class CommentController extends Controller
         $request->validate([                                // on check que les saisies de l'utilisateur sont au bon format, sinon msg d'erreur automatique
             'content'=> ['required', 'string', 'max:500'],
             'tags'=> ['required', 'string', 'max:40'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         Comment::create([
@@ -39,6 +40,7 @@ class CommentController extends Controller
             'content'=> $request -> content,
             'tags'=> $request -> tags,
             'post_id'=> $request ->post_id,
+            'image' => isset($request['image']) ? uploadImage($request['image']) : null,
         ]);
         return redirect()->route('home')->with('message', 'Le commentaire a bien été ajouté');
     }
@@ -70,12 +72,14 @@ class CommentController extends Controller
         $request->validate([                                // on check que les saisies de l'utilisateur sont au bon format, sinon msg d'erreur automatique
             'content'=> ['required', 'string', 'max:500'],
             'tags'=> ['required', 'string', 'max:40'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
          $comment->update([
              'content'=> $request -> content,
              'tags'=> $request -> tags,
-         ]);
+             'image' => isset($request['image']) ? uploadImage($request['image']) : null,
+            ]);
         return redirect()->route('home')->with('message', 'Le commentaire a bien été modifié'); // on redirige bien vers la route home pour que s'affiche bien tous les posts sur home.blade
     }
     

@@ -51,7 +51,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'pseudo' => ['required', 'string', 'max:40'],
-            'image' => ['required', 'string', 'max:40'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -59,7 +59,6 @@ class RegisterController extends Controller
 
     /**
      * Créer une nouvelle instance d'utilisateur après un enregistrement valide.
-     *
      * @param  array  $data
      * @return \App\Models\User
      */
@@ -70,6 +69,7 @@ class RegisterController extends Controller
             'image' => $data['image'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'image' => isset($data['image']) ? uploadImage($data['image']) : null,
         ]);
     }
 }
